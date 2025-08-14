@@ -39,15 +39,29 @@
 <template>
   <div class="flex h-screen">
     <!-- Sidebarr Large-->
-     <div :class="['bg-base-200 w-64 space-y-4 transition-transform duration-300',isOpenSidebar?'translate-x-0':'translate-x-full','fixed z-40 h-full lg:static lg:translate-x-0']">
+     <div :class="[
+        'bg-base-200 w-64 space-y-4 transition-transform duration-300 fixed z-40 h-full lg:static',
+        isOpenSidebar ? 'translate-x-0' : '-translate-x-full',
+        'lg:translate-x-0' // pastikan ini override di layar besar
+      ]">
       <h2 class="text-2xl font-bold m-5">{{ authStore.user?.name }}</h2>
       <ul class="menu bg-base-200 rounded-box w-56">
         <li>
           <h2 class="menu-title">Dashboard</h2>
           <ul>
-            <li><RouterLink :to="{name:'dashboard'}">Home</RouterLink></li>
-            <li><a>Item 2</a></li>
-            <li><a>Item 3</a></li>
+            <li><RouterLink class="text-md" :to="{name:'dashboard'}">🏠 Home</RouterLink></li>
+          </ul>
+        </li>
+        <li>
+          <h2 class="menu-title">User</h2>
+          <ul>
+            <li><RouterLink class="text-md" :to="{name:'profile'}">🖼 Profile</RouterLink></li>
+          </ul>
+        </li>
+        <li v-if="authStore.user?.role === 'admin'">
+          <h2 class="menu-title">Master</h2>
+          <ul>
+            <li><RouterLink class="text-md" :to="{name:'category'}">🛬 Category</RouterLink></li>
           </ul>
         </li>
       </ul>
